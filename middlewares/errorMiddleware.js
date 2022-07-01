@@ -1,5 +1,5 @@
 const errorMiddleware = (error, req, res, _next) => {
-  res.status(400).send('Algo deu errado');
+  res.status(404).json({ message: error.message });
 };
 
 module.exports = errorMiddleware;

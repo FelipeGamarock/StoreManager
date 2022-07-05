@@ -13,4 +13,9 @@ const getById = async (id) => {
   return item;
 };
 
-module.exports = { getAll, getById };
+const add = async (data) => {
+  const itemId = await productsModel.add(data);
+  return { id: itemId, name: data.name };
+};
+
+module.exports = { getAll, getById, add };

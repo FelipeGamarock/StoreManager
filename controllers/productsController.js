@@ -19,4 +19,10 @@ const getById = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, getById };
+const add = async (req, res, _next) => {
+  const { name } = req.body;
+  const item = await productsService.add({ name });
+  return res.status(201).json(item);
+};
+
+module.exports = { getAll, getById, add };

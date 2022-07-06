@@ -13,9 +13,15 @@ const getById = async (id) => {
   return item;
 };
 
-const add = async (data) => {
-  const itemId = await productsModel.add(data);
-  return { id: itemId, name: data.name };
+const add = async (name) => {
+  if (!name) {
+    throw new Error('"name" is required');
+  }
+  if (name.length < 5) {
+    throw new Error('"name" length must be at least 5 characters long');
+  }
+  const item = await productsModel.add(name);
+  return item;
 };
 
 module.exports = { getAll, getById, add };

@@ -17,4 +17,11 @@ const add = async (name) => {
   const [{ insertId: id }] = await connection.execute(query, [name]);
   return { id, name };
 };
-module.exports = { getAll, getById, add };
+
+const remove = async (id) => {
+  const query = 'DELETE FROM StoreManager.products WHERE id=?;';
+  await connection.execute(query, [id]);
+  return true;
+};
+
+module.exports = { getAll, getById, add, remove };

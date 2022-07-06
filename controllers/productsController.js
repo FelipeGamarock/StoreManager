@@ -29,4 +29,14 @@ const add = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, getById, add };
+const remove = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const item = await productsService.remove(id);
+    return res.status(204).json(item);
+  } catch (error) {
+    next(error);
+  }
+};
+ 
+module.exports = { getAll, getById, add, remove };

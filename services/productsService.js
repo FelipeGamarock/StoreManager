@@ -24,4 +24,13 @@ const add = async (name) => {
   return item;
 };
 
-module.exports = { getAll, getById, add };
+const remove = async (id) => {
+  const item = await productsModel.getById(id);
+  if (!item) {
+    throw new Error('Product not found');
+  }
+  await productsModel.remove(id);
+  return item;
+};
+
+module.exports = { getAll, getById, add, remove };

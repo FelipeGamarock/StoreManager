@@ -29,6 +29,17 @@ const add = async (req, res, next) => {
   }
 };
 
+const edit = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const item = await productsService.edit(id, name);
+    return res.status(200).json(item);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const remove = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -39,4 +50,4 @@ const remove = async (req, res, next) => {
   }
 };
  
-module.exports = { getAll, getById, add, remove };
+module.exports = { getAll, getById, add, remove, edit };

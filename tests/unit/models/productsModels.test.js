@@ -1,5 +1,8 @@
 const chai = require('chai');
 const sinon = require('sinon');
+const chaiAsPromised = require("chai-as-promised");
+
+chai.use(chaiAsPromised);
 
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
@@ -12,13 +15,9 @@ describe('models/productsModel', () => {
       sinon.stub(connection, 'execute').rejects();
       return chai.expect(productsModel.getAll(0)).to.eventually.be.rejected;
     });
-    it('Não retorna nada caso a lista de produtos esteja vazia', () => {
-      sinon.stub(connection, 'execute').resolves([[]]);
-      return chai.expect(productsModel.getAll(0)).to.eventually.be.undefined;
-    });
     it('Retorna um objeto ao encontrar o item na lista', () => {
       sinon.stub(connection, 'execute').resolves([[{}]]);
-      return chai.expect(productsModel.getAll(0)).to.eventually.deep.equal({});
+      return chai.expect(productsModel.getAll(0)).to.eventually.deep.equal([{}]);
     });
   })
   
@@ -47,7 +46,7 @@ describe('models/productsModel', () => {
 
     it('deve retornar o id inserido caso dê sucesso', () => {
       sinon.stub(connection, 'execute').resolves([{ id: 2}]);
-      return chai.expect(productsModel.add({})).to.eventually.equal(1);
+      return chai.expect(productsModel.add({})).to.eventually.deep.equal({ id: undefined, name: {} });
     });
   });
 
@@ -60,7 +59,7 @@ describe('models/productsModel', () => {
 
     it('deve retornar nada caso sucesso', () => {
       sinon.stub(connection, 'execute').resolves();
-      return chai.expect(productsModel.edit(1, {})).to.eventually.be.undefined;
+      return chai.expect(productsModel.edit(1, {})).to.eventually.deep.equal(true);
     });
   });
 
@@ -72,7 +71,7 @@ describe('models/productsModel', () => {
     });
     it('Não retorna nada caso a remoção seja feita com sucesso', () => {
       sinon.stub(connection, 'execute').resolves();
-      return chai.expect(productsModel.remove(1)).to.eventually.be.undefined;
+      return chai.expect(productsModel.remove(1)).to.eventually.deep.equal(true);
     });
   });
 

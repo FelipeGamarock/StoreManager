@@ -12,13 +12,9 @@ describe('models/salesModel', () => {
       sinon.stub(connection, 'execute').rejects();
       return chai.expect(salesModel.getAll(0)).to.eventually.be.rejected;
     });
-    it('Não retorna nada caso a lista de produtos esteja vazia', () => {
-      sinon.stub(connection, 'execute').resolves([[]]);
-      return chai.expect(salesModel.getAll(0)).to.eventually.be.undefined;
-    });
     it('Retorna um objeto ao encontrar o item na lista', () => {
       sinon.stub(connection, 'execute').resolves([[{}]]);
-      return chai.expect(salesModel.getAll(0)).to.eventually.deep.equal({});
+      return chai.expect(salesModel.getAll(0)).to.eventually.deep.equal([{}]);
     });
   })
 
@@ -30,11 +26,11 @@ describe('models/salesModel', () => {
     });
     it('Não retorna nada caso a lista de produtos esteja vazia', () => {
       sinon.stub(connection, 'execute').resolves([[]]);
-      return chai.expect(salesModel.getById(0)).to.eventually.be.undefined;
+      return chai.expect(salesModel.getById(0)).to.eventually.deep.equal([]);
     });
     it('Retorna um objeto ao encontrar o item na lista', () => {
       sinon.stub(connection, 'execute').resolves([[{}]]);
-      return chai.expect(salesModel.getById(0)).to.eventually.deep.equal({});
+      return chai.expect(salesModel.getById(0)).to.eventually.deep.equal([{}]);
     });
   });
 });

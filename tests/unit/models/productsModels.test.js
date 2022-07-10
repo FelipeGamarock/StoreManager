@@ -1,12 +1,23 @@
 const chai = require('chai');
-const chaiAsPromised = require('chai-as-promised');
 const sinon = require('sinon');
 
-const productsModel = require('../../../models/productsModel');
 const connection = require('../../../models/connection');
+const productsModel = require('../../../models/productsModel');
 
-chai.use(chaiAsPromised);
-
+const productsMock = [
+  {
+    "id": 1,
+    "name": "Martelo de Thor"
+  },
+  {
+    "id": 2,
+    "name": "Traje de encolhimento"
+  },
+  {
+    "id": 3,
+    "name": "Escudo do Capitão América"
+  }
+]
 
 describe('models/productsModel', () => {
   describe('getById', () => {

@@ -38,6 +38,32 @@ describe('models/productsModel', () => {
     });
   });
 
+  describe('add', () => {
+    beforeEach(sinon.restore);
+    it('deve disparar um erro caso o connection.execute dispare um erro', () => {
+      sinon.stub(connection, 'execute').rejects();
+      return chai.expect(productsModel.add({})).to.eventually.be.rejected;
+    });
+
+    it('deve retornar o id inserido caso dê sucesso', () => {
+      sinon.stub(connection, 'execute').resolves([{ id: 2}]);
+      return chai.expect(productsModel.add({})).to.eventually.equal(1);
+    });
+  });
+
+  describe('edit', () => {
+    beforeEach(sinon.restore);
+    it('deve disparar um erro caso o connection.execute dispare um erro', () => {
+      sinon.stub(connection, 'execute').rejects();
+      return chai.expect(productsModel.edit(1, {})).to.eventually.be.rejected;
+    });
+
+    it('deve retornar nada caso sucesso', () => {
+      sinon.stub(connection, 'execute').resolves();
+      return chai.expect(productsModel.edit(1, {})).to.eventually.be.undefined;
+    });
+  });
+
   describe('remove', () => {
     beforeEach(sinon.restore);
     it('Dispara um erro ao não encontra o id solicitado', () => {
